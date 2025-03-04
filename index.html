@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marlboro Tarihi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Bebas Neue', sans-serif;
+            background-color: #f8f8f8;
+            color: black;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        /* === LOADER (HARFLER TEK TEK) === */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 80px;
+            letter-spacing: 4px;
+            z-index: 999;
+        }
+
+        .letter {
+            opacity: 0;
+            transform: translateY(50px);
+            display: inline-block;
+            animation: letterFade 0.5s ease forwards;
+        }
+
+        @keyframes letterFade {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Harflerin animasyon süreleri */
+        .letter:nth-child(1) { animation-delay: 0.3s; }
+        .letter:nth-child(2) { animation-delay: 0.6s; }
+        .letter:nth-child(3) { animation-delay: 0.9s; }
+        .letter:nth-child(4) { animation-delay: 1.2s; }
+        .letter:nth-child(5) { animation-delay: 1.5s; }
+        .letter:nth-child(6) { animation-delay: 1.8s; }
+        .letter:nth-child(7) { animation-delay: 2.1s; }
+        .letter:nth-child(8) { animation-delay: 2.4s; }
+
+        /* Loader kapanma efekti */
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        .hide-loader {
+            animation: fadeOut 1s ease 3s forwards;
+        }
+
+        /* === HEADER & ÜÇGEN === */
+        .header {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            background-color: #b50000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transform: translateY(-100%);
+            animation: slideDown 1s ease 3s forwards;
+        }
+
+        @keyframes slideDown {
+            to { transform: translateY(0); }
+        }
+
+        .triangle {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100%);
+            width: 100%;
+            height: 180px;
+            background: white;
+            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+            animation: triangleDrop 1s ease 3.2s forwards;
+        }
+
+        @keyframes triangleDrop {
+            from { top: 120%; }
+            to { top: 100%; }
+        }
+
+        .title {
+            font-size: 80px;
+            color: black;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 10;
+            letter-spacing: 4px;
+            text-shadow: 3px 3px 0px white, -3px -3px 0px white;
+        }
+
+        /* === TARİHSEL SÜREÇ SEKSİYONU === */
+        .history {
+            padding: 80px 20px;
+            max-width: 900px;
+            margin: auto;
+            font-size: 24px;
+            line-height: 1.8;
+            opacity: 0;
+            animation: fadeIn 1s ease 3.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .event {
+            width: 80%;
+            padding: 20px;
+            margin: 20px 0;
+            background: white;
+            border-left: 5px solid #b50000;
+            box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(40px);
+            animation: textAppear 1s ease forwards;
+        }
+
+        @keyframes textAppear {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .event:nth-child(1) { animation-delay: 3.7s; }
+        .event:nth-child(2) { animation-delay: 3.9s; }
+        .event:nth-child(3) { animation-delay: 4.1s; }
+        .event:nth-child(4) { animation-delay: 4.3s; }
+        .event:nth-child(5) { animation-delay: 4.5s; }
+        .event:nth-child(6) { animation-delay: 4.7s; }
+
+        .event h3 {
+            font-size: 28px;
+            color: #b50000;
+            margin-bottom: 10px;
+        }
+
+        /* === ÜRETİM AŞAMASI === */
+        .production {
+            background-color: #f1f1f1;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .production h2 {
+            font-size: 40px;
+            margin-bottom: 40px;
+            color: #b50000;
+        }
+
+        .step {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .step:nth-child(1) { animation-delay: 4.7s; }
+        .step:nth-child(2) { animation-delay: 4.9s; }
+        .step:nth-child(3) { animation-delay: 5.1s; }
+        .step:nth-child(4) { animation-delay: 5.3s; }
+
+        .step h3 {
+            font-size: 32px;
+            color: #b50000;
+            margin-bottom: 15px;
+        }
+
+        .step p {
+            font-size: 20px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOADER (HARFLER TEK TEK) -->
+    <div class="loader" id="loader">
+        <span class="letter">M</span>
+        <span class="letter">A</span>
+        <span class="letter">R</span>
+        <span class="letter">L</span>
+        <span class="letter">B</span>
+        <span class="letter">O</span>
+        <span class="letter">R</span>
+        <span class="letter">O</span>
+    </div>
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1 class="title">Marlboro</h1>
+        <div class="triangle"></div>
+    </div>
+
+    <!-- TARİHSEL SÜREÇ -->
+    <div class="history">
+        <h2>Marlboro'nun Tarihsel Süreci</h2>
+        <div class="timeline">
+            <div class="event">
+                <h3>1924</h3>
+                <p>Marlboro markası ilk kez kadınlar için piyasaya sürüldü.</p>
+            </div>
+            <div class="event">
+                <h3>1950’ler</h3>
+                <p>“Marlboro Man” reklamlarıyla erkeklere hitap etmeye başladı.</p>
+            </div>
+            <div class="event">
+                <h3>1970’ler</h3>
+                <p>Dünya çapında en çok satan sigara markalarından biri oldu.</p>
+            </div>
+            <div class="event">
+                <h3>1990’lar</h3>
+                <p>Marlboro, reklamlarını farklı formatlarda sunarak küresel pazarda büyümeye devam etti.</p>
+            </div>
+            <div class="event">
+                <h3>2000'ler</h3>
+                <p>Marka, daha fazla küresel çeşitlilik ve yeni reklam stratejileriyle büyümeye devam etti.</p>
+            </div>
+            <div class="event">
+                <h3>Günümüz</h3>
+                <p>Yasal düzenlemeler ve sağlık uyarıları nedeniyle Marlboro, sigara içiciliğine karşı yeni tutumlar geliştirmeye başladı.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ÜRETİM AŞAMASI -->
+    <div class="production">
+        <h2>Üretim Aşaması</h2>
+        <div class="step">
+            <h3>Adım 1: Tütün Seçimi</h3>
+            <p>Marlboro sigaralarının yapımında kullanılan tütün, yüksek kaliteyi sağlamak için titizlikle seçilir. Bu tütünler, en iyi tat ve aroma için seçilir.</p>
+        </div>
+        <div class="step">
+            <h3>Adım 2: Tütün Kurutma</h3>
+            <p>Seçilen tütünler, özel kurutma teknikleriyle doğal yöntemlerle işlenir. Bu süreç, sigaranın karakteristik lezzetini oluşturur.</p>
+        </div>
+        <div class="step">
+            <h3>Adım 3: Paketleme</h3>
+            <p>Sigara üretiminin son aşaması, tütünlerin doğru şekilde paketlenmesidir. Her sigara, kalite standartlarına uygun olarak paketlenir.</p>
+        </div>
+        <div class="step">
+            <h3>Adım 4: Dağıtım</h3>
+            <p>Paketlenmiş Marlboro sigaraları, dünya genelindeki satış noktalarına gönderilmek üzere lojistik ağlarına dahil edilir.</p>
+        </div>
+    </div>
+ <footer style="background: linear-gradient(to bottom, #b50000, #7a0000); color: white; text-align: center; padding: 80px 20px; font-family: 'Bebas Neue', sans-serif; position: relative; border-top: 14px solid white; box-shadow: 0px -10px 30px rgba(0, 0, 0, 0.4);">
+    
+    <!-- Üst Marlboro Şeridi -->
+    <div style="position: absolute; top: -40px; left: 50%; transform: translateX(-50%); background: white; padding: 18px 40px; border-radius: 6px; font-size: 26px; color: #b50000; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);">
+        Marlboro Legacy
+    </div>
+
+    <div style="max-width: 900px; margin: auto; background: black; padding: 50px; border-radius: 12px; border: 2px solid #b50000; box-shadow: inset 0px 0px 15px rgba(255, 0, 0, 0.2), 0px 10px 25px rgba(0, 0, 0, 0.7); position: relative;">
+        
+        <!-- Kırmızı Çizgi -->
+        <div style="position: absolute; top: 15px; left: 50%; transform: translateX(-50%); width: 100px; height: 3px; background: red; box-shadow: 0px 0px 12px red;"></div>
+
+        <!-- Başlık -->
+        <h2 style="font-size: 30px; letter-spacing: 2px; text-transform: uppercase; color: white; display: inline-block; padding-bottom: 5px; text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.3);">
+            Bir Efsanenin İzinde
+        </h2>
+
+        <!-- İnce Kırmızı Çizgi -->
+        <div style="width: 70px; height: 3px; background: red; margin: 15px auto; box-shadow: 0px 0px 10px red;"></div>
+
+        <!-- Açıklama -->
+        <p style="font-size: 20px; opacity: 0.85; margin-top: 10px; font-style: italic;">
+            Zamansız kalite ve özgürlüğün sembolü.
+        </p>
+
+        <!-- Parlayan Alt Çizgi -->
+        <div style="width: 60px; height: 3px; background: white; margin: 15px auto; box-shadow: 0px 0px 8px white;"></div>
+        
+        <!-- Copyright -->
+        <p style="font-size: 16px; opacity: 0.75; margin-top: 10px;">
+            © 2025 Marlboro Tribute | Tüm Hakları Saklıdır
+        </p>
+    </div>
+
+</footer>
+    <script>
+        setTimeout(() => {
+            document.getElementById("loader").classList.add("hide-loader");
+        }, 3200);
+    </script>
+
+</body>
+</html>
